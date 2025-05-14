@@ -343,6 +343,8 @@ class XilinxBscanSpi(xilinx.XilinxPlatform):
         ("ffg901-1", 1): ["V26", None, "R30", "T30", "R28", "T28"],
         ("ffg900-1", 1): ["U19", None, "P24", "R25", "R20", "R21"],
         ("ffg1156-1", 1): ["V30", None, "AA33", "AA34", "Y33", "Y34"],
+        # Kasli DIOT v1.0
+        ("ffg1156-1", 2): ["P6", None, "V28", "V29", "V26", "V27"],
         ("ffg1157-1", 1): ["AL33", None, "AN33", "AN34", "AK34", "AL34"],
         ("ffg1158-1", 1): ["C24", None, "A23", "A24", "B26", "A26"],
         ("ffg1926-1", 1): ["AK33", None, "AN34", "AN35", "AJ34", "AK34"],
@@ -402,6 +404,7 @@ class XilinxBscanSpi(xilinx.XilinxPlatform):
         "xc7a100t": ("csg324-1", 1, "LVCMOS25", Series7),
         "xc7a15t": ("cpg236-1", 1, "LVCMOS25", Series7),
         "xc7a200t": ("fbg484-1", 1, "LVCMOS25", Series7),
+        "xc7a200t-kasli-diot-1v0": ("ffg1156-1", 2, "LVCMOS25", Series7),
         "xc7a35t": ("cpg236-1", 1, "LVCMOS25", Series7),
         "xc7a50t": ("cpg236-1", 1, "LVCMOS25", Series7),
         "xc7a75t": ("csg324-1", 1, "LVCMOS25", Series7),
@@ -466,7 +469,7 @@ class XilinxBscanSpi(xilinx.XilinxPlatform):
         device = target.split("-", 1)[0]
         platform = cls("{}-{}".format(device, pkg), pins, std, Top.toolchain)
         top = Top(platform)
-        name = "bscan_spi_{}".format(target)
+        name = "bscan_spi_{}".format("_".join(target.split("-")))
         try:
             platform.build(top, build_name=name)
         except Exception as e:
